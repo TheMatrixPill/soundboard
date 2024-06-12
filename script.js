@@ -20,7 +20,8 @@ document.getElementById("darkModeToggle").addEventListener("click", (e) => {
 
 const localDarkModeSetting = localStorage.getItem(darkModeSettingName) == "true";
 if (localDarkModeSetting) {
-    document.getElementById("darkModeToggle").click();
+    document.getElementById("darkModeToggle").checked = true;
+    darkMode(true);
 }
 
 //Detecting Key Press
