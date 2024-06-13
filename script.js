@@ -32,7 +32,7 @@ document.addEventListener("keydown", function (event) {
 function makeSound(key) {
     switch (key) {
         case "q":
-            playAudio("Sounds/Maik-Zeit-zu-flippen.mp3", () => { spin(); maikBack(); });
+            playAudio("Sounds/Maik-Zeit-zu-flippen.mp3", [spin, maikBack]);
             break;
         case "w":
             playAudio("Sounds/woJakob.mp3");
@@ -76,16 +76,22 @@ function makeSound(key) {
 
 function playAudio(src, onPlay) {
     let audioElement = new Audio(src);
-    let onEnd = null;
+    let onEnd = [];
+    let actions = [];
+    if(!Array.isArray(onPlay))
+        actions = [onPlay];
+    else
+        actions = onPlay;
+
     audioElement.addEventListener("loadeddata", () => {
-        if (onPlay)
-            onEnd = onPlay();
+        if (actions.length > 0)
+            onEnd = actions.map(action => action());
         audioElement.play();
     });
 
     audioElement.addEventListener("ended", () => {
-        if (onEnd)
-            onEnd();
+        if (onEnd.length > 0)
+            onEnd.forEach(action => action ? action() : {});
     });
 }
 
@@ -130,25 +136,25 @@ function pink() {
 }
 
 function mertBack() {
-    document.getElementsByClassName('main')[0].classList.add("mertBackground");
-
+    const classList = document.getElementsByTagName('body')[0].classList;
+    classList.add("mertBackground");
     return () => {
-        document.getElementsByClassName('main')[0].classList.remove("mertBackground");
+        classList.remove("mertBackground");
     }
 }
 
 function maikBack() {
-    document.getElementsByClassName('main')[0].classList.add("maikBackground");
-
+    const classList = document.getElementsByTagName('body')[0].classList;
+    classList.add("maikBackground");
     return () => {
-        document.getElementsByClassName('main')[0].classList.remove("maikBackground");
-    };
+        classList.remove("maikBackground");
+    }
 }
 
 function dabBack() {
-    document.getElementsByClassName('main')[0].classList.add("dabMode");
-
+    const classList = document.getElementsByTagName('body')[0].classList;
+    classList.add("dabMode");
     return () => {
-        document.getElementsByClassName('main')[0].classList.remove("dabMode");
+        classList.remove("dabMode");
     }
 }
