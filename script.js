@@ -1,4 +1,4 @@
-//Year for Copyright
+//Year for Copyrighthttp://127.0.0.1:3000/index.html
 document.getElementById("year").innerHTML = new Date().getFullYear();
 
 //Detecting Button press
@@ -32,7 +32,7 @@ document.addEventListener("keydown", function (event) {
 function makeSound(key) {
     switch (key) {
         case "q":
-            playAudio("Sounds/Maik-Zeit-zu-flippen.mp3", spin);
+            playAudio("Sounds/Maik-Zeit-zu-flippen.mp3", () => { spin(); maikBack(); });
             break;
         case "w":
             playAudio("Sounds/woJakob.mp3");
@@ -47,16 +47,16 @@ function makeSound(key) {
             playAudio("Sounds/Eugen.mp3", russia);
             break;
         case "z":
-            playAudio("Sounds/JakobDabbed.mp3");
+            playAudio("Sounds/JakobDabbed.mp3", dabBack);
             break;
         case "u":
-            playAudio("Sounds/Mert.mp3");
+            playAudio("Sounds/Mert.mp3", mertBack);
             break;
         case "i":
-            playAudio("Sounds/niklasDabbed.mp3");
+            playAudio("Sounds/niklasDabbed.mp3", dabBack);
             break;
         case "o":
-            playAudio("Sounds/maikDabbed.mp3");
+            playAudio("Sounds/maikDabbed.mp3", dabBack);
             break;
         case "p":
             playAudio("Sounds/moinEugen.mp3");
@@ -107,6 +107,8 @@ function search() {
         }
     })
 }
+
+//custom backgrounds
 function spin() {
     let classList = document.getElementsByTagName('body')[0].classList;
     classList.add("spin");
@@ -124,5 +126,29 @@ function pink() {
     classList.add("pinkMode");
     return () => {
         classList.remove("pinkMode");
+    }
+}
+
+function mertBack() {
+    document.getElementsByClassName('main')[0].classList.add("mertBackground");
+
+    return () => {
+        document.getElementsByClassName('main')[0].classList.remove("mertBackground");
+    }
+}
+
+function maikBack() {
+    document.getElementsByClassName('main')[0].classList.add("maikBackground");
+
+    return () => {
+        document.getElementsByClassName('main')[0].classList.remove("maikBackground");
+    };
+}
+
+function dabBack() {
+    document.getElementsByClassName('main')[0].classList.add("dabMode");
+
+    return () => {
+        document.getElementsByClassName('main')[0].classList.remove("dabMode");
     }
 }
